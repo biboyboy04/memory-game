@@ -20,6 +20,17 @@ $primary-color: rgb(238, 228, 221);
   box-sizing: border-box;
 }
 
+.card-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin: 0;
+  padding: 0;
+  margin-top: 1rem;
+}
+
 .card {
   position: relative;
   display: flex;
@@ -31,17 +42,13 @@ $primary-color: rgb(238, 228, 221);
   background: linear-gradient(to bottom, rgb(192, 176, 142), rgb(143, 108, 43));
   border-radius: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  text-align: center;
   padding: 1rem;
-  margin-bottom: 1rem;
-  margin-left: 5rem;
-
   transition: transform 0.3s;
 
   &:hover {
     transform: scale(1.05);
 
-    img {
+    .front {
       transform: translate(-10px, -20px) scale(1.4);
     }
   }
@@ -50,6 +57,10 @@ $primary-color: rgb(238, 228, 221);
     height: auto;
     width: 100%;
     object-fit: cover;
+    margin-bottom: 1rem;
+  }
+
+  .front {
     transition: transform 0.3s;
   }
 
@@ -60,7 +71,7 @@ $primary-color: rgb(238, 228, 221);
     width: 100%;
     padding: 1rem;
     color: white;
-    overflow: hidden;
     font-size: 1.2rem;
+    text-align: center;
   }
 }
