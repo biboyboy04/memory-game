@@ -47,6 +47,7 @@ $primary-color: rgb(238, 228, 221);
 
   &:hover {
     transform: scale(1.05);
+    background: linear-gradient(to bottom, white, rgb(150, 131, 92));
 
     .front {
       transform: translate(-10px, -20px) scale(1.4);
