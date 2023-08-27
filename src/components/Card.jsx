@@ -2,19 +2,14 @@ import { useState } from "react";
 import Tilt from "react-parallax-tilt";
 import ReactCardFlip from "react-card-flip";
 
-const Card = ({ name, src }) => {
-  const [flipped, setFlipped] = useState(false);
-  function handleClick(e) {
-    e.preventDefault();
-    setFlipped(!flipped);
-  }
+const Card = ({ name, src, flipped, handleCardClick }) => {
   return (
     <Tilt>
       <ReactCardFlip isFlipped={flipped} flipDirection="horizontal">
         {/* Front Card */}
         <div
           className="card"
-          onClick={handleClick}
+          onClick={handleCardClick}
           style={{ visibility: flipped ? "hidden" : "visible" }}
         >
           <img className="front" src={src}></img>
@@ -22,10 +17,10 @@ const Card = ({ name, src }) => {
         </div>
 
         {/* Back Card */}
-        <div className="card" onClick={handleClick}>
+        <div className="card" onClick={handleCardClick}>
           <img
             src={"../../public/monsters/mh_symbol.png"}
-            onClick={handleClick}
+            onClick={handleCardClick}
           ></img>
         </div>
       </ReactCardFlip>

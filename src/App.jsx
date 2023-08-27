@@ -5,7 +5,13 @@ import monstersData from "./monsters.js";
 
 function App() {
   const [monsters, setMonsters] = useState([]);
-  const numberOfMonsters = 3; // Set the desired number of monsters
+  const [flipped, setFlipped] = useState(false);
+  const numberOfMonsters = 3;
+
+  function handleCardClick(e) {
+    e.preventDefault();
+    setFlipped(!flipped);
+  }
 
   useEffect(() => {
     const randomMonsters = [];
@@ -19,22 +25,27 @@ function App() {
       const randomIndex = Math.floor(Math.random() * availableMonsters.length);
 
       // Remove the monster at the random index from availableMonsters
-      //and add it to randomMonsters
+      // and add it to randomMonsters
       randomMonsters.push(availableMonsters.splice(randomIndex, 1)[0]);
     }
 
     setMonsters(randomMonsters);
-  }, [numberOfMonsters]);
+  }, []);
 
   return (
-    <div className="card-container">
-      {monsters.map((monster) => (
-        <Card
-          key={monster.name}
-          name={monster.name}
-          src={`/monsters/${monster.imageUrl}`}
-        />
-      ))}
+    <div className="">
+      <h1>Monster Matcher</h1>
+      <div className="card-container">
+        {monsters.map((monster) => (
+          <Card
+            key={monster.name}
+            name={monster.name}
+            src={`/monsters/${monster.imageUrl}`}
+            flipped={flipped}
+            handleCardClick={handleCardClick}
+          />
+        ))}
+      </div>
     </div>
   );
 }
