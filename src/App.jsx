@@ -10,8 +10,17 @@ function App() {
 
   function handleCardClick(e) {
     e.preventDefault();
-    setFlipped(!flipped);
+
+    // set to true  to ensure that the card is flipped
+    // because !flipped makes repeated clicks on the same card not flip
+    setFlipped(true);
   }
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setFlipped(false);
+    }, 1500);
+    return () => clearTimeout(timer);
+  }, [flipped]);
 
   useEffect(() => {
     const randomMonsters = [];
