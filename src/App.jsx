@@ -7,38 +7,18 @@ function App() {
   const [monsters, setMonsters] = useState([]);
   const [isFlipped, setIsFlipped] = useState(false);
   const [isNewGame, setIsNewGame] = useState(true);
+  const [score, setScore] = useState(0);
+  const [highScore, setHighScore] = useState(0);
 
-  const numberOfMonsters = 3;
+  const numberOfMonsters = 12; // also the max score
 
-  const handleLose = () => {
-    alert("You lose!");
-    setIsNewGame(true);
-  };
-
-  const handleWin = () => {
-    alert("You win!");
-    setIsNewGame(true);
-  };
-
-  const handleCardClick = (e, currentMonster) => {
-    e.preventDefault();
-
-    // set to true  to ensure that the card is isFlipped
-    // because !isFlipped makes repeated clicks on the same card not flip
-    setIsFlipped(true);
-
-    if (currentMonster.clicked) {
-      handleLose();
+  // Restoring the high score from local storage when the component mounts
+  useEffect(() => {
+    const storedHighScore = localStorage.getItem("highScore");
+    if (storedHighScore) {
+      setHighScore(parseInt(storedHighScore));
     }
-
-    const newMonsters = monsters.map((monster) => {
-      if (monster.name === currentMonster.name) {
-        return { ...monster, clicked: true };
-      }
-      return monster;
-    });
-    setMonsters(newMonsters);
-  };
+  }, []);
 
   // Shuffle monsters and flip them back
   useEffect(() => {
@@ -60,6 +40,9 @@ function App() {
     ? 1 option is to wait for the animation to finish before randomizing the monsters
   */
   useEffect(() => {
+    // Placed here so that theres no delay
+    setScore(0);
+
     if (isNewGame) {
       const timer = setTimeout(() => {
         const randomMonsters = [];
@@ -76,12 +59,52 @@ function App() {
         }
 
         setMonsters(randomMonsters);
-        setIsNewGame(false); // Reset isNewGame here
+        setIsNewGame(false);
       }, 800); // 800 here is the anuimation o
 
       return () => clearTimeout(timer);
     }
   }, [isNewGame]);
+
+  const handleLose = () => {
+    alert("You lose!");
+    if (score > highScore) {
+      setHighScore(score);
+      localStorage.setItem("highScore", score);
+    }
+    setIsNewGame(true);
+  };
+
+  const handleWin = () => {
+    alert("You win!");
+    if (score > highScore) {
+      setHighScore(score);
+      localStorage.setItem("highScore", score);
+    }
+    setIsNewGame(true);
+  };
+
+  const handleCardClick = (e, currentMonster) => {
+    e.preventDefault();
+
+    // set to true  to ensure that the card is isFlipped
+    // because !isFlipped makes repeated clicks on the same card not flip
+    setIsFlipped(true);
+
+    if (currentMonster.clicked) {
+      handleLose();
+    } else {
+      setScore((score) => score + 1);
+    }
+
+    const newMonsters = monsters.map((monster) => {
+      if (monster.name === currentMonster.name) {
+        return { ...monster, clicked: true };
+      }
+      return monster;
+    });
+    setMonsters(newMonsters);
+  };
 
   //Fisher-Yates algorithm
   // swap element starting from last to a random element
@@ -104,6 +127,14 @@ function App() {
         </div>
       </div> */}
       <div className="title">Monster Matcher</div>
+      <div className="score">
+        <div className="score-title">Score</div>
+        <div className="score-number">{score}</div>
+      </div>
+      <div className="high-score">
+        <div className="high-score-title">High Score</div>
+        <div className="high-score-number">{highScore}</div>
+      </div>
       <div className="card-container">
         {monsters.map((monster, index) => (
           <Card
