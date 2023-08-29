@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./App.scss";
 import Card from "./components/Card.jsx";
 import monstersData from "./monsters.js";
+import Modal from "./components/Modal.jsx";
 
 function App() {
   const [monsters, setMonsters] = useState([]);
@@ -117,38 +118,24 @@ function App() {
   return (
     <div className="game">
       {gameStatus === "lose" && (
-        <div className="modal">
-          <div className="modal-content">
-            <img src="/public/images/quest_failed.png"></img>
-            <button
-              className="button"
-              onClick={() => {
-                setIsNewGame(true);
-                setGameStatus("playing");
-                console.log("test");
-              }}
-            >
-              Restart
-            </button>
-          </div>
-        </div>
+        <Modal
+          imageSource="/public/images/quest_failed.png"
+          buttonText="Play again"
+          onClick={() => {
+            setIsNewGame(true);
+            setGameStatus("playing");
+          }}
+        />
       )}
       {gameStatus === "win" && (
-        <div className="modal">
-          <div className="modal-content">
-            <img src="/public/images/quest_complete.png"></img>
-            <button
-              className="button"
-              onClick={() => {
-                setIsNewGame(true);
-                setGameStatus("playing");
-                console.log("test");
-              }}
-            >
-              Restart
-            </button>
-          </div>
-        </div>
+        <Modal
+          imageSource="/public/images/quest_complete.png"
+          buttonText="Play again"
+          onClick={() => {
+            setIsNewGame(true);
+            setGameStatus("playing");
+          }}
+        />
       )}
       <div className="title">Monster Matcher</div>
       <div className="score">
