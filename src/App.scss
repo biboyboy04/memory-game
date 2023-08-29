@@ -129,7 +129,6 @@ body {
 }
 
 .modal-content {
-  padding: 20px;
   width: 80%; /* Adjust the width as needed */
   max-width: 400px; /* Maximum width for the content */
   border-radius: 10px;
@@ -138,24 +137,51 @@ body {
   align-items: center;
   flex-direction: column;
   justify-content: center;
+  gap: 1rem;
 
   img {
-    width: 100%;
+    width: 450px;
     height: auto;
     object-fit: cover;
+
+    animation-name: pulse;
+    animation-delay: 0.2s;
+    animation-duration: 0.5s;
+    opacity: 0;
+    animation-fill-mode: forwards;
+  }
+
+  .button {
+    display: inline-block;
+    border-radius: 4px;
+    background-color: rgb(243, 163, 0);
+    border: none;
+    color: #ffffff;
+    text-align: center;
+    font-size: 1.5rem;
+    padding: 0.8rem 1.5rem;
+    transition: all 0.3s;
+    cursor: pointer;
+    margin: 5px;
+  }
+
+  .button:hover {
+    background-color: rgb(255, 255, 255);
+    color: rgb(243, 163, 0);
   }
 }
 
-.button {
-  display: inline-block;
-  border-radius: 4px;
-  background-color: rgb(243, 163, 0);
-  border: none;
-  color: #ffffff;
-  text-align: center;
-  font-size: 1.5rem;
-  padding: 0.8rem 1.5rem;
-  transition: all 0.5s;
-  cursor: pointer;
-  margin: 5px;
+@keyframes pulse {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.5;
+    transform: rotate(-10deg) scale(5);
+    transition: all 0.8s cubic-bezier(0.6, 0.04, 0.98, 0.335);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
