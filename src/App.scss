@@ -8,16 +8,53 @@ $primary-color: rgb(238, 228, 221);
   font-style: normal;
 }
 
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 :root {
   background-color: rgb(72, 51, 36);
   font-family: "MonsterHunter", Arial, sans-serif;
   letter-spacing: 1.5px;
 }
 
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+#root {
+  width: 100%;
+  height: 100%;
+}
+
+.game {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  margin-top: 1rem;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+}
+
+.title {
+  text-align: center;
+  font-size: 4rem;
+  color: white;
+  margin: 0;
+  padding: 0;
+  justify-self: flex-start;
+  margin-top: 1rem;
 }
 
 .card-container {
@@ -28,11 +65,11 @@ $primary-color: rgb(238, 228, 221);
   gap: 2rem;
   margin: 0;
   padding: 0;
-  margin-top: 1rem;
+  margin: auto 0;
+  width: 80%;
 }
 
 .card {
-  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -75,5 +112,76 @@ $primary-color: rgb(238, 228, 221);
     color: white;
     font-size: 1.2rem;
     text-align: center;
+  }
+}
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  z-index: 1000;
+}
+
+.modal-content {
+  width: 80%; /* Adjust the width as needed */
+  max-width: 400px; /* Maximum width for the content */
+  border-radius: 10px;
+  z-index: 1001;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1rem;
+
+  img {
+    width: 450px;
+    height: auto;
+    object-fit: cover;
+
+    animation-name: pulse;
+    animation-delay: 0.2s;
+    animation-duration: 0.5s;
+    opacity: 0;
+    animation-fill-mode: forwards;
+  }
+
+  .button {
+    display: inline-block;
+    border-radius: 4px;
+    background-color: rgb(243, 163, 0);
+    border: none;
+    color: #ffffff;
+    text-align: center;
+    font-size: 1.5rem;
+    padding: 0.8rem 1.5rem;
+    transition: all 0.3s;
+    cursor: pointer;
+    margin: 5px;
+  }
+
+  .button:hover {
+    background-color: rgb(255, 255, 255);
+    color: rgb(243, 163, 0);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.5;
+    transform: rotate(-10deg) scale(5);
+    transition: all 0.8s cubic-bezier(0.6, 0.04, 0.98, 0.335);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
   }
 }
