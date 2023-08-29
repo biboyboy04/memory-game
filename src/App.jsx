@@ -9,8 +9,8 @@ function App() {
   const [isNewGame, setIsNewGame] = useState(true);
   const [score, setScore] = useState(0);
   const [highScore, setHighScore] = useState(0);
-
-  const numberOfMonsters = 12; // also the max score
+  const [gameStatus, setGameStatus] = useState("playing");
+  const numberOfMonsters = 3; // also the max score
 
   // Restoring the high score from local storage when the component mounts
   useEffect(() => {
@@ -22,48 +22,40 @@ function App() {
 
   // Shuffle monsters and flip them back
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsFlipped(false);
-    }, 1300);
-    if (!isFlipped) {
-      const newMonsters = shuffleArray([...monsters]);
-      setMonsters(newMonsters);
+    if (gameStatus === "playing") {
+      const timer = setTimeout(
+        () => {
+          setIsFlipped(false);
+        },
+        isNewGame ? 0 : 1300
+      ); // No delay if isNewGame is true
+      // Only shuffle when the cards are flipped and not on restart
+      if (!isFlipped && !isNewGame) {
+        const newMonsters = shuffleArray([...monsters]);
+        setMonsters(newMonsters);
+      }
+      return () => clearTimeout(timer);
     }
-    return () => clearTimeout(timer);
-  }, [isFlipped]);
+  }, [isFlipped, gameStatus]);
 
-  /* 
-    ! Added a timer to delay the randomizing of the monsters, because when the user lose/win, 
-    ! the monsters will be randomized immediately and the user will see the monsters change
-    ! before the animation of flippiong the cards back is finished.
-
-    ? 1 option is to wait for the animation to finish before randomizing the monsters
-  */
   useEffect(() => {
     // Placed here so that theres no delay
     setScore(0);
 
-    if (isNewGame) {
-      const timer = setTimeout(() => {
-        const randomMonsters = [];
-        const availableMonsters = [...monstersData];
+    const randomMonsters = [];
+    const availableMonsters = [...monstersData];
 
-        while (
-          randomMonsters.length < numberOfMonsters &&
-          availableMonsters.length > 0
-        ) {
-          const randomIndex = Math.floor(
-            Math.random() * availableMonsters.length
-          );
-          randomMonsters.push(availableMonsters.splice(randomIndex, 1)[0]);
-        }
-
-        setMonsters(randomMonsters);
-        setIsNewGame(false);
-      }, 800); // 800 here is the anuimation o
-
-      return () => clearTimeout(timer);
+    while (
+      randomMonsters.length < numberOfMonsters &&
+      availableMonsters.length > 0
+    ) {
+      const randomIndex = Math.floor(Math.random() * availableMonsters.length);
+      randomMonsters.push(availableMonsters.splice(randomIndex, 1)[0]);
     }
+
+    setMonsters(randomMonsters);
+    setGameStatus("playing");
+    setIsNewGame(false);
   }, [isNewGame]);
 
   const handleLose = () => {
@@ -72,7 +64,7 @@ function App() {
       setHighScore(score);
       localStorage.setItem("highScore", score);
     }
-    setIsNewGame(true);
+    setGameStatus("lose");
   };
 
   const handleWin = () => {
@@ -81,7 +73,7 @@ function App() {
       setHighScore(score);
       localStorage.setItem("highScore", score);
     }
-    setIsNewGame(true);
+    setGameStatus("win");
   };
 
   const handleCardClick = (e, currentMonster) => {
@@ -95,6 +87,10 @@ function App() {
       handleLose();
     } else {
       setScore((score) => score + 1);
+    }
+
+    if (score === numberOfMonsters - 1) {
+      handleWin();
     }
 
     const newMonsters = monsters.map((monster) => {
@@ -120,12 +116,40 @@ function App() {
 
   return (
     <div className="game">
-      {/* <div className="modal">
-        <div className="modal-content">
-          <img src="/public/images/quest_failed.png"></img>
-          <button className="button">Restart</button>
+      {gameStatus === "lose" && (
+        <div className="modal">
+          <div className="modal-content">
+            <img src="/public/images/quest_failed.png"></img>
+            <button
+              className="button"
+              onClick={() => {
+                setIsNewGame(true);
+                setGameStatus("playing");
+                console.log("test");
+              }}
+            >
+              Restart
+            </button>
+          </div>
         </div>
-      </div> */}
+      )}
+      {gameStatus === "win" && (
+        <div className="modal">
+          <div className="modal-content">
+            <img src="/public/images/quest_complete.png"></img>
+            <button
+              className="button"
+              onClick={() => {
+                setIsNewGame(true);
+                setGameStatus("playing");
+                console.log("test");
+              }}
+            >
+              Restart
+            </button>
+          </div>
+        </div>
+      )}
       <div className="title">Monster Matcher</div>
       <div className="score">
         <div className="score-title">Score</div>
