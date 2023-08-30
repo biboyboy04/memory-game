@@ -145,8 +145,8 @@ body {
     object-fit: cover;
 
     animation-name: pulse;
-    animation-delay: 0.2s;
-    animation-duration: 0.5s;
+    animation-delay: 0.5s;
+    animation-duration: 0.25s;
     opacity: 0;
     animation-fill-mode: forwards;
   }
@@ -174,11 +174,12 @@ body {
 @keyframes pulse {
   0% {
     opacity: 0;
+    transform: rotate(-10deg) scale(5);
   }
   50% {
     opacity: 0.5;
-    transform: rotate(-10deg) scale(5);
-    transition: all 0.8s cubic-bezier(0.6, 0.04, 0.98, 0.335);
+
+    transition: all 0.1s ease;
   }
   100% {
     opacity: 1;
