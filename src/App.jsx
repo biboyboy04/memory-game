@@ -66,14 +66,6 @@ function App() {
     }
   }, [gameStatus]);
 
-  const handleLose = () => {
-    setGameStatus("lose");
-  };
-
-  const handleWin = () => {
-    setGameStatus("win");
-  };
-
   const handleCardClick = (e, currentMonster) => {
     e.preventDefault();
 
@@ -82,13 +74,13 @@ function App() {
     setIsFlipped(true);
 
     if (currentMonster.clicked) {
-      handleLose();
+      setGameStatus("lose");
     } else {
       const newScore = score + 1;
       setScore(newScore);
 
       if (newScore === numberOfMonsters) {
-        handleWin();
+        setGameStatus("win");
       }
     }
 
