@@ -53,6 +53,7 @@ function App() {
     if (isNewGame) {
       setScore(0);
       setGameStatus("playing");
+      setIsNewGame(false);
       const randomMonsters = getRandomMonsters();
       setMonsters(randomMonsters);
     }
