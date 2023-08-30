@@ -59,39 +59,37 @@ function App() {
     setIsNewGame(false);
   }, [isNewGame]);
 
-  const handleLose = () => {
-    alert("You lose!");
+  useEffect(() => {
     if (score > highScore) {
       setHighScore(score);
       localStorage.setItem("highScore", score);
     }
+  }, [gameStatus]);
+
+  const handleLose = () => {
     setGameStatus("lose");
   };
 
   const handleWin = () => {
-    alert("You win!");
-    if (score > highScore) {
-      setHighScore(score);
-      localStorage.setItem("highScore", score);
-    }
     setGameStatus("win");
   };
 
   const handleCardClick = (e, currentMonster) => {
     e.preventDefault();
 
-    // set to true  to ensure that the card is isFlipped
+    // set to true to ensure that the card is isFlipped
     // because !isFlipped makes repeated clicks on the same card not flip
     setIsFlipped(true);
 
     if (currentMonster.clicked) {
       handleLose();
     } else {
-      setScore((score) => score + 1);
-    }
+      const newScore = score + 1;
+      setScore(newScore);
 
-    if (score === numberOfMonsters - 1) {
-      handleWin();
+      if (newScore === numberOfMonsters) {
+        handleWin();
+      }
     }
 
     const newMonsters = monsters.map((monster) => {
