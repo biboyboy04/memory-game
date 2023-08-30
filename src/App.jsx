@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faRotate } from "@fortawesome/free-solid-svg-icons";
+
 import "./App.scss";
 import Card from "./components/Card.jsx";
 import monstersData from "./monsters.js";
@@ -20,6 +23,13 @@ function App() {
       setHighScore(parseInt(storedHighScore));
     }
   }, []);
+
+  useEffect(() => {
+    if (score > highScore) {
+      setHighScore(score);
+      localStorage.setItem("highScore", score);
+    }
+  }, [gameStatus]);
 
   // Shuffle monsters and flip them back
   useEffect(() => {
@@ -58,13 +68,6 @@ function App() {
     setGameStatus("playing");
     setIsNewGame(false);
   }, [isNewGame]);
-
-  useEffect(() => {
-    if (score > highScore) {
-      setHighScore(score);
-      localStorage.setItem("highScore", score);
-    }
-  }, [gameStatus]);
 
   const handleCardClick = (e, currentMonster) => {
     e.preventDefault();
@@ -105,36 +108,29 @@ function App() {
     return array;
   };
 
+  const handleRestart = () => {
+    setIsNewGame(true);
+    setGameStatus("playing");
+  };
+
   return (
     <div className="game">
       {gameStatus === "lose" && (
         <Modal
           imageSource="/public/images/quest_failed.png"
           buttonText="Play again"
-          onClick={() => {
-            setIsNewGame(true);
-            setGameStatus("playing");
-          }}
+          onClick={handleRestart}
         />
       )}
       {gameStatus === "win" && (
         <Modal
           imageSource="/public/images/quest_complete.png"
           buttonText="Play again"
-          onClick={() => {
-            setIsNewGame(true);
-            setGameStatus("playing");
-          }}
+          onClick={handleRestart}
         />
       )}
-      <div className="title">Monster Matcher</div>
-      <div className="score">
-        <div className="score-title">Score</div>
-        <div className="score-number">{score}</div>
-      </div>
-      <div className="high-score">
-        <div className="high-score-title">High Score</div>
-        <div className="high-score-number">{highScore}</div>
+      <div className="top-content">
+        <div className="title">Monster Matcher</div>
       </div>
       <div className="card-container">
         {monsters.map((monster, index) => (
@@ -148,6 +144,34 @@ function App() {
             }}
           />
         ))}
+      </div>
+      <div className="bottom-content">
+        <div className="scores">
+          <div className="score">
+            <img src="/public/images/MHRise_Item_Icon-Head_Red.png"></img>
+            <div className="score-number">{highScore}</div>
+            High Score
+          </div>
+          <div className="score">
+            <img src="/public/images/MHRise_Item_Icon-Head_White.png"></img>
+            <div className="score-number">{score}</div>
+            Score
+          </div>
+        </div>
+        <div className="restart">
+          <button
+            className="restart-button"
+            onClick={() => {
+              setIsNewGame(true);
+            }}
+          >
+            <FontAwesomeIcon
+              icon={faRotate}
+              size="2xl"
+              style={{ color: "#f3a300" }}
+            />
+          </button>
+        </div>
       </div>
     </div>
   );

@@ -32,11 +32,12 @@ body {
 #root {
   width: 100%;
   height: 100%;
+  padding: 1rem;
 }
 
 .game {
   display: flex;
-  justify-content: center;
+
   align-items: center;
   flex-direction: column;
   margin: 0;
@@ -54,7 +55,6 @@ body {
   margin: 0;
   padding: 0;
   justify-self: flex-start;
-  margin-top: 1rem;
 }
 
 .card-container {
@@ -65,8 +65,8 @@ body {
   gap: 2rem;
   margin: 0;
   padding: 0;
-  margin: auto 0;
-  width: 80%;
+  width: 100%;
+  flex: 1;
 }
 
 .card {
@@ -183,5 +183,40 @@ body {
   100% {
     opacity: 1;
     transform: scale(1);
+  }
+}
+
+.top-content {
+  display: relative;
+  margin-top: 1rem;
+}
+
+.bottom-content {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0rem 4rem;
+  color: white;
+
+  button {
+    background-color: transparent;
+    border: none;
+    transition: 0.3s;
+  }
+
+  button:hover {
+    transform: scale(1.2);
+  }
+}
+
+.score {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 1.3rem;
+
+  img {
+    width: 3rem;
   }
 }
