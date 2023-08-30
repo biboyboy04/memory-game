@@ -50,11 +50,17 @@ function App() {
   }, [isFlipped, gameStatus]);
 
   useEffect(() => {
-    // Placed here so that theres no delay
-    setScore(0);
+    if (isNewGame) {
+      setScore(0);
+      setGameStatus("playing");
+      const randomMonsters = getRandomMonsters();
+      setMonsters(randomMonsters);
+    }
+  }, [isNewGame]);
 
-    const randomMonsters = [];
+  const getRandomMonsters = () => {
     const availableMonsters = [...monstersData];
+    const randomMonsters = [];
 
     while (
       randomMonsters.length < numberOfMonsters &&
@@ -64,10 +70,8 @@ function App() {
       randomMonsters.push(availableMonsters.splice(randomIndex, 1)[0]);
     }
 
-    setMonsters(randomMonsters);
-    setGameStatus("playing");
-    setIsNewGame(false);
-  }, [isNewGame]);
+    return randomMonsters;
+  };
 
   const handleCardClick = (e, currentMonster) => {
     e.preventDefault();
