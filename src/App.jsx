@@ -12,7 +12,7 @@ import monsterAlreadyFoundSfx from "../public/audios/monster_click_already_found
 import menuClick from "../public/audios/menu_click.mp3";
 
 import "./App.scss";
-import Card from "./components/Card.jsx";
+import CardContainer from "./components/CardContainer.jsx";
 import monstersData from "./monsters.js";
 import Modal from "./components/Modal.jsx";
 
@@ -159,20 +159,6 @@ function App() {
 
   return (
     <div className="game">
-      {gameStatus === "lose" && (
-        <Modal
-          imageSource="/public/images/quest_failed.png"
-          buttonText="Play again"
-          onClick={handleRestart}
-        />
-      )}
-      {gameStatus === "win" && (
-        <Modal
-          imageSource="/public/images/quest_complete.png"
-          buttonText="Play again"
-          onClick={handleRestart}
-        />
-      )}
       <div className="top-content">
         <div className="title">Monster Matcher</div>
 
@@ -187,19 +173,13 @@ function App() {
           </div>
         </div>
       </div>
-      <div className="card-container">
-        {monsters.map((monster, index) => (
-          <Card
-            key={index}
-            name={monster.name}
-            src={`/public/images/monsters/${monster.imageUrl}`}
-            flipped={isFlipped}
-            handleCardClick={(e) => {
-              handleCardClick(e, monster);
-            }}
-          />
-        ))}
-      </div>
+
+      <CardContainer
+        monsters={monsters}
+        isFlipped={isFlipped}
+        handleCardClick={handleCardClick}
+      />
+
       <div className="bottom-content">
         <button
           className="music-button"
@@ -228,6 +208,22 @@ function App() {
           </div>
         </button>
       </div>
+
+      {/* Modals */}
+      {gameStatus === "lose" && (
+        <Modal
+          imageSource="/public/images/quest_failed.png"
+          buttonText="Play again"
+          onClick={handleRestart}
+        />
+      )}
+      {gameStatus === "win" && (
+        <Modal
+          imageSource="/public/images/quest_complete.png"
+          buttonText="Play again"
+          onClick={handleRestart}
+        />
+      )}
     </div>
   );
 }
