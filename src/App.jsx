@@ -1,6 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faRotate } from "@fortawesome/free-solid-svg-icons";
+import {
+  faRotate,
+  faVolumeHigh,
+  faVolumeOff,
+} from "@fortawesome/free-solid-svg-icons";
+
+import bgMusic from "../public/audios/MH_bg_music.mp3";
+import monsterFoundSfx from "../public/audios/monster_click_found.mp3";
+import monsterAlreadyFoundSfx from "../public/audios/monster_click_already_found.mp3";
+import menuClick from "../public/audios/menu_click.mp3";
 
 import "./App.scss";
 import Card from "./components/Card.jsx";
@@ -14,7 +23,29 @@ function App() {
   const [score, setScore] = useState(0);
   const [highScore, setHighScore] = useState(0);
   const [gameStatus, setGameStatus] = useState("playing");
-  const numberOfMonsters = 3; // also the max score
+  const [isBgMusicOn, setIsBgMusicOn] = useState(false);
+  const numberOfMonsters = 12; // also the max score
+
+  const menuClickAudio = new Audio(menuClick);
+  menuClickAudio.volume = 0.2;
+
+  useEffect(() => {
+    const bgAudio = new Audio(bgMusic);
+    bgAudio.loop = true;
+
+    bgAudio.volume = 0.1;
+
+    if (isBgMusicOn) {
+      bgAudio.play();
+    } else {
+      bgAudio.pause();
+    }
+
+    return () => {
+      bgAudio.pause();
+      bgAudio.currentTime = 0;
+    };
+  }, [isBgMusicOn]);
 
   // Restoring the high score from local storage when the component mounts
   useEffect(() => {
@@ -77,6 +108,13 @@ function App() {
   const handleCardClick = (e, currentMonster) => {
     e.preventDefault();
 
+    const sfx = currentMonster.clicked
+      ? monsterAlreadyFoundSfx
+      : monsterFoundSfx;
+    const sfxAudio = new Audio(sfx);
+    sfxAudio.volume = 0.2;
+    sfxAudio.play();
+
     // set to true to ensure that the card is isFlipped
     // because !isFlipped makes repeated clicks on the same card not flip
     setIsFlipped(true);
@@ -116,6 +154,7 @@ function App() {
   const handleRestart = () => {
     setIsNewGame(true);
     setGameStatus("playing");
+    menuClickAudio.play();
   };
 
   return (
@@ -136,6 +175,17 @@ function App() {
       )}
       <div className="top-content">
         <div className="title">Monster Matcher</div>
+
+        <div className="scores">
+          <div className="score">
+            <img src="/public/images/MHRise_Item_Icon-Head_Red.png"></img>
+            <div className="score-number"> High Score: {highScore}</div>
+          </div>
+          <div className="score">
+            <img src="/public/images/MHRise_Item_Icon-Head_White.png"></img>
+            <div className="score-number">Score: {score}</div>
+          </div>
+        </div>
       </div>
       <div className="card-container">
         {monsters.map((monster, index) => (
@@ -151,32 +201,32 @@ function App() {
         ))}
       </div>
       <div className="bottom-content">
-        <div className="scores">
-          <div className="score">
-            <img src="/public/images/MHRise_Item_Icon-Head_Red.png"></img>
-            <div className="score-number">{highScore}</div>
-            High Score
-          </div>
-          <div className="score">
-            <img src="/public/images/MHRise_Item_Icon-Head_White.png"></img>
-            <div className="score-number">{score}</div>
-            Score
-          </div>
-        </div>
-        <div className="restart">
-          <button
-            className="restart-button"
-            onClick={() => {
-              setIsNewGame(true);
-            }}
-          >
+        <button
+          className="music-button"
+          onClick={() => {
+            menuClickAudio.play();
+            setIsBgMusicOn(!isBgMusicOn);
+          }}
+        >
+          <div className="icon-container">
             <FontAwesomeIcon
-              icon={faRotate}
-              size="2xl"
-              style={{ color: "#f3a300" }}
+              icon={isBgMusicOn ? faVolumeHigh : faVolumeOff}
+              style={{ color: "white" }}
             />
-          </button>
-        </div>
+          </div>
+        </button>
+
+        <button
+          className="restart-button"
+          onClick={() => {
+            menuClickAudio.play();
+            setIsNewGame(true);
+          }}
+        >
+          <div className="icon-container">
+            <FontAwesomeIcon icon={faRotate} style={{ color: "white" }} />
+          </div>
+        </button>
       </div>
     </div>
   );

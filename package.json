@@ -19,7 +19,9 @@
     "react-card-flip": "^1.2.0",
     "react-dom": "^18.2.0",
     "react-modal": "^3.16.1",
+    "react-native-use-sound": "^1.2.2",
     "react-parallax-tilt": "^1.7.163",
+    "use-sound": "^4.0.1",
     "uuid": "^9.0.0"
   },
   "devDependencies": {

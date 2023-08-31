@@ -33,11 +33,11 @@ body {
   width: 100%;
   height: 100%;
   padding: 1rem;
+  overflow: auto;
 }
 
 .game {
   display: flex;
-
   align-items: center;
   flex-direction: column;
   margin: 0;
@@ -45,7 +45,6 @@ body {
   margin-top: 1rem;
   width: 100%;
   height: 100%;
-  overflow: auto;
 }
 
 .title {
@@ -58,15 +57,13 @@ body {
 }
 
 .card-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 2rem;
-  margin: 0;
+  display: grid;
+  grid-template-rows: repeat(2, 1fr);
+  grid-template-columns: repeat(6, 1fr);
+  gap: 1rem;
   padding: 0;
-  width: 100%;
-  flex: 1;
+  width: fit-content;
+  margin: auto;
 }
 
 .card {
@@ -74,8 +71,8 @@ body {
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  width: 200px;
-  height: 300px;
+  width: 20vh;
+  height: 30vh;
   background: linear-gradient(to bottom, rgb(192, 176, 142), rgb(143, 108, 43));
   border-radius: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -188,8 +185,38 @@ body {
 }
 
 .top-content {
-  display: relative;
-  margin-top: 1rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  width: 100%;
+  padding: 0 2rem;
+  align-items: center;
+
+  .title {
+    justify-self: center;
+    grid-column: 2;
+    font-size: 2rem;
+    color: white;
+    margin: 0;
+    padding: 0;
+  }
+}
+
+.scores {
+  grid-column: 3; /* Position the scores in the third column */
+  color: white; /* Adjust color here */
+  justify-self: self-end;
+}
+
+.score {
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+  font-size: 1.2rem;
+
+  img {
+    width: 2.5rem;
+  }
 }
 
 .bottom-content {
@@ -211,13 +238,84 @@ body {
   }
 }
 
-.score {
+/* Extra Small Devices (portrait phones) */
+@media (max-width: 576px) {
+  /* Styles for extra small devices */
+  .card {
+    width: 15vh;
+    height: 25vh;
+  }
+
+  .card-container {
+    grid-template-rows: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Small Devices (landscape phones, portrait tablets) */
+@media (min-width: 577px) and (max-width: 768px) {
+  /* Styles for small devices */
+  .card {
+    width: 15vh;
+    height: 25vh;
+  }
+
+  .card-container {
+    grid-template-rows: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* Medium Devices (landscape tablets, small laptops) */
+@media (min-width: 769px) and (max-width: 992px) {
+  /* Styles for medium devices */
+  .card {
+    width: 15vh;
+    height: 25vh;
+  }
+
+  .card-container {
+    grid-template-rows: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* Large Devices (laptops, desktops) */
+@media (min-width: 993px) and (max-width: 1200px) {
+  /* Styles for large devices */
+  .card {
+    width: 15vh;
+    height: 25vh;
+  }
+
+  .card-container {
+    grid-template-rows: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* Extra Large Devices (large laptops and desktops) */
+@media (min-width: 1201px) {
+  /* Styles for extra large devices */
+  .card {
+    width: 20vh;
+    height: 30vh;
+  }
+
+  .card-container {
+    grid-template-rows: repeat(2, 1fr);
+    grid-template-columns: repeat(6, 1fr);
+  }
+}
+
+.icon-container {
+  width: 2.5rem;
+  height: 2.5rem;
+  background-color: rgb(243, 163, 0);
+  border-radius: 50%;
   display: flex;
   align-items: center;
-  gap: 1rem;
-  font-size: 1.3rem;
-
-  img {
-    width: 3rem;
-  }
+  justify-content: center;
+  object-fit: cover;
+  display: flex;
 }
