@@ -7,7 +7,7 @@ const CardContainer = ({ monsters, isFlipped, handleCardClick }) => {
         <Card
           key={index}
           name={monster.name}
-          src={`/public/images/monsters/${monster.imageUrl}`}
+          src={`/images/monsters/${monster.imageUrl}`}
           flipped={isFlipped}
           handleCardClick={(e) => {
             handleCardClick(e, monster);

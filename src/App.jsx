@@ -216,14 +216,14 @@ function App() {
       {/* Modals */}
       {gameStatus === "lose" && (
         <Modal
-          imageSource="/public/images/quest_failed.png"
+          imageSource="/images/quest_failed.png"
           buttonText="Play again"
           onClick={handleRestart}
         />
       )}
       {gameStatus === "win" && (
         <Modal
-          imageSource="/public/images/quest_complete.png"
+          imageSource="/images/quest_complete.png"
           buttonText="Play again"
           onClick={handleRestart}
         />
