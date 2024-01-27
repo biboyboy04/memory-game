@@ -6,10 +6,10 @@ import {
   faVolumeOff,
 } from "@fortawesome/free-solid-svg-icons";
 
-import bgMusic from "../public/audios/MH_bg_music.mp3";
-import monsterFoundSfx from "../public/audios/monster_click_found.mp3";
-import monsterAlreadyFoundSfx from "../public/audios/monster_click_already_found.mp3";
-import menuClick from "../public/audios/menu_click.mp3";
+import bgMusic from "/audios/MH_bg_music.mp3";
+import monsterFoundSfx from "/audios/monster_click_found.mp3";
+import monsterAlreadyFoundSfx from "/audios/monster_click_already_found.mp3";
+import menuClick from "/audios/menu_click.mp3";
 
 import "./App.scss";
 import CardContainer from "./components/CardContainer.jsx";
@@ -168,11 +168,11 @@ function App() {
         <div className="title">Monster Matcher</div>
         <div className="scores">
           <div className="score">
-            <img src="/public/images/MHRise_Item_Icon-Head_Red.png"></img>
+            <img src="/images/MHRise_Item_Icon-Head_Red.png"></img>
             <div className="score-number"> High Score: {highScore}</div>
           </div>
           <div className="score">
-            <img src="/public/images/MHRise_Item_Icon-Head_White.png"></img>
+            <img src="/images/MHRise_Item_Icon-Head_White.png"></img>
             <div className="score-number">Score: {score}</div>
           </div>
         </div>

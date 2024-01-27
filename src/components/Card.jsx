@@ -19,7 +19,7 @@ const Card = ({ name, src, flipped, handleCardClick }) => {
 
         {/* Back Card */}
         <div className="card">
-          <img src={"/public/images/mh_symbol.png"}></img>
+          <img src={"/images/mh_symbol.png"}></img>
         </div>
       </ReactCardFlip>
     </Tilt>
