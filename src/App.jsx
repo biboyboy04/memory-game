@@ -23,7 +23,7 @@ function App() {
   const [score, setScore] = useState(0);
   const [highScore, setHighScore] = useState(0);
   const [gameStatus, setGameStatus] = useState("playing");
-  const [isBgMusicOn, setIsBgMusicOn] = useState(false);
+  const [isBgMusicOn, setIsBgMusicOn] = useState(true);
   const numberOfMonsters = 12; // also the max score
 
   const menuClickAudio = new Audio(menuClick);
@@ -47,7 +47,7 @@ function App() {
     };
   }, [isBgMusicOn]);
 
-  // Restoring the high score from local storage when the component mounts
+  // Get high score from local storage
   useEffect(() => {
     const storedHighScore = localStorage.getItem("highScore");
     if (storedHighScore) {
@@ -55,6 +55,7 @@ function App() {
     }
   }, []);
 
+  // Update high score
   useEffect(() => {
     if (score > highScore) {
       setHighScore(score);
@@ -70,7 +71,8 @@ function App() {
           setIsFlipped(false);
         },
         isNewGame ? 0 : 1300
-      ); // No delay if isNewGame is true
+      );
+      // No delay if isNewGame is true
       // Only shuffle when the cards are flipped and not on restart
       if (!isFlipped && !isNewGame) {
         const newMonsters = shuffleArray([...monsters]);
@@ -160,8 +162,10 @@ function App() {
   return (
     <div className="game">
       <div className="top-content">
+        <div className="">
+          <p className="rule">{"Don't click the same monster  twice"}</p>
+        </div>
         <div className="title">Monster Matcher</div>
-
         <div className="scores">
           <div className="score">
             <img src="/public/images/MHRise_Item_Icon-Head_Red.png"></img>
